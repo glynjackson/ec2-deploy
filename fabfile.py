@@ -49,6 +49,7 @@ from ec2_deploy.ec2.api import _create_instance
 # Load environment vars.
 dotenv.load_dotenv('.env')
 
+import server_templates.ubuntu14custom.tasks
 
 def base_environment_settings():
     """
@@ -62,24 +63,16 @@ def base_environment_settings():
     env.key_filename = os.environ['EC2_DEPLOY_AWS_PRIVATE_FILE']
     env.aws_key = os.environ['EC2_DEPLOY_AWS_KEY']
     env.aws_secret_key = os.environ['EC2_DEPLOY_AWS_SECRET_KEY']
-    env.hosts = get_hosts_list(local_path, staging=True)
     env.template = os.environ['EC2_DEPLOY_TEMPLATE']
-    env.aws_ami = os.environ['EC2_DEPLOY_AWS_AMI']
-    env.tasks = importlib.import_module("aws_fabric.environments.%s.%s" % (env.template, "tasks"))
+    env.tasks = importlib.import_module('.tasks', 'server_templates.{}'.format(os.environ['EC2_DEPLOY_TEMPLATE']))
 
-    env.server_type = {
-        'web': {
-            'image_id': 'ami-0ea61279',
-            'instance_type': 't2.micro',
-            'security_groups': ['web'],
-        },
-    }
 
 
 def staging():
     base_environment_settings()
     env.environment = 'staging'
     env.branch = "develop"
+    env.hosts = get_hosts_list("/server_template/{}".format(os.environ['EC2_DEPLOY_TEMPLATE']), staging=True)
 
 
 def production():

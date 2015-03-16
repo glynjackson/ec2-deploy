@@ -1,18 +1,12 @@
-
 import time
 from boto import ec2
-from fabric.api import  settings
+from fabric.api import settings
 
-
-
-import config as config
 from notifications import Notification
 
 
 class AWS(object):
-
     def __init__(self, access_key=None, secret_key=None):
-
         self.aws_connection = None
         self.access_key = access_key
         self.secret_key = secret_key
@@ -31,17 +25,13 @@ class AWS(object):
         return self.ec2conn
 
 
-
-
-
-
 class EC2Conn:
-    def __init__(self):
+    def __init__(self, access_key=None, secret_key=None, key_file=None):
         self.ec2conn = None
-        self.access_key = config.AWS_API_KEY
-        self.secret_key = config.AWS_SECRET_KEY
-        self.file_key = config.LOCAL_AWS_KEY_FILE
-        self.user_name = config.AWS_USER_NAME
+        self.access_key = access_key
+        self.secret_key = secret_key
+        self.file_key = key_file
+        self.user_name = "ubuntu"
 
     def connect(self):
         Notification('Connecting to the AWS instance').info()
@@ -54,9 +44,7 @@ class EC2Conn:
         return self.ec2conn.get_all_instances()
 
 
-
     def open_ec2_connection(self, instance_dns=None):
-
         if not instance_dns:
             Notification('No DNS information was specified').error()
 
