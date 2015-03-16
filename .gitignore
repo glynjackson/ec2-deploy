@@ -21,3 +21,4 @@ logs/*
 db.sqlite
 /venv/
 .env
+.DS_Store

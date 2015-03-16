@@ -1,5 +1,5 @@
-3 Installation Steps
---------------------
+Installation Steps
+------------------
 
 1 Install Package
 =================
@@ -39,7 +39,7 @@ Extra settings needed in your ``.env`` file::
 
 
 List of Fabric Commands
-=======================
+-----------------------
 
 There are a number of convenient Fabric scrips available to facilitate code deployment and other server tasks on AWS EC2.
 
