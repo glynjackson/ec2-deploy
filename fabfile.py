@@ -1,9 +1,7 @@
 """
 
 Commands include:
-    - fab local setupwizard
-        - Creates configuration and connection settings to AWS for first time use.
-          Adds the new host to the hostfile for production environment.
+
 
      - fab production instance
         - Creates a new EC2 instance form a blank AMI image. Instance will be setup based on your server template.
@@ -35,16 +33,22 @@ Commands include:
 
 """
 import os
+from os.path import join, dirname, normpath
 import time
 import importlib
+import dotenv
 
 from fabric.operations import prompt
 from fabric.contrib.console import confirm
 from fabric.api import task, settings, sudo, execute, env, run, cd, local, put, abort, get, hosts
 
-from aws_fabric.setup.tasks import _Wizard
-from aws_fabric.utilities import _run_task, add_to_hosts, get_hosts_list, get_settings
-from aws_fabric.ec2.api import _create_instance
+from ec2_deploy.setup.tasks import _Wizard
+from ec2_deploy.utilities import _run_task, add_to_hosts, get_hosts_list, get_settings
+from ec2_deploy.ec2.api import _create_instance
+
+
+# Load environment vars.
+dotenv.load_dotenv(normpath(join(dirname(__file__), '"/../../../')) + '/.env')
 
 
 def base_environment_settings():
@@ -53,15 +57,15 @@ def base_environment_settings():
     """
     env.release_stamp = time.strftime('%Y%m%d%H%M%S')
     env.connection_attempts = 5
-    env.local_repo = settings['LOCAL_REPO']
-    env.server_repo = settings['SERVER_REPO']
-    env.user = settings['AWS_USER']
-    env.key_filename = settings['AWS_PRIVATE_FILE']
-    env.aws_key = settings['AWS_KEY']
-    env.aws_secret_key = settings['AWS_SECRET_KEY']
+    env.local_repo = os.environ['EC2_DEPLOY_LOCAL_REPO']
+    env.server_repo = os.environ['EC2_DEPLOY_SERVER_REPO']
+    env.user = os.environ['EC2_DEPLOY_AWS_USER']
+    env.key_filename = os.environ['EC2_DEPLOY_AWS_PRIVATE_FILE']
+    env.aws_key = os.environ['EC2_DEPLOY_AWS_KEY']
+    env.aws_secret_key = os.environ['EC2_DEPLOY_AWS_SECRET_KEY']
     env.hosts = get_hosts_list(local_path, staging=True)
-    env.template = settings['TEMPLATE']
-    env.aws_ami = settings['AWS_AMI']
+    env.template = os.environ['EC2_DEPLOY_TEMPLATE']
+    env.aws_ami = os.environ['EC2_DEPLOY_AWS_AMI']
     env.tasks = importlib.import_module("aws_fabric.environments.%s.%s" % (env.template, "tasks"))
 
 
@@ -78,18 +82,11 @@ def production():
     env.server_type = {
         'web': {
             'image_id': 'ami-0ea61279',
-            'instance_type': 't1.micro',
+            'instance_type': 't2.micro',
             'security_groups': ['web'],
         },
     }
 
-
-def setupwizard():
-    """
-    A Wizard that creates a new AWS environment for deployment.
-    """
-    # Run setup
-    _Wizard().run()
 
 
 def serversetup():
@@ -97,7 +94,6 @@ def serversetup():
     Public function that configure and setup server software i.e. Gunicorn, Supervisor and Nginx.
     """
     _server_setup()
-
 
 
 def instance():
@@ -197,7 +193,6 @@ def environment_vars():
     _set_update_environment_vars()
 
 
-
 """
 Private functions
 """
@@ -265,6 +260,7 @@ def _server_setup():
     """
     _run_task(env.tasks.setup_server, "Setting up server services/software...",
               "Finished setting up server services/software")
+
 
 def _set_update_environment_vars():
     """

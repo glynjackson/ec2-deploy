@@ -1,25 +1,33 @@
-Pick Environment
-================
+3 Installation Steps
+--------------------
+
+1 Install Package
+=================
+
+To get the latest stable release from PyPi::
+    pip install ec2-deploy
+
+2 Pick Server Template
+======================
+
+Next, pick your server template from the directory ``server-template``, and edit the following files to reflect your own setup.
+
+ * Default
+ * etc etc
 
 
+3 Local Environment Setup
+=========================
+
+When the codebase is deployed using Fabric, which environment variables your server should set
+is automatically detected based on the command staging/production. Either ``vars_production.env`` or ``vars_staging.env`` will
+be deployed.
+
+However, running a local version requires you to create some extra environment variables that are used for deployment
+configuration/settings data in a file called ``.env``.
 
 
-Local Environment Setup
-=======================
-
-When the codebase is deployed using Fabric, the environment is automatically detected based on the server type staging/production.
-However, running a local version of the API requires you to set these environment variables yourself and other configuration/settings data.
-
-When you run any fab command the package will look for a file called ``.env`` in the root directory
-(in the same folder as ``manage.py``).
-
-If you required different settings you don't have to set a ``.env`` file.
-Because settings use standard environment variables you can either ``export var=xyz`` in shell or create a
-``.ssh`` script for each environment yourself i.e.``source yourvars.sh``
-
-**Don't commit your ``.env`` file to GitHub!**
-
-Example ``.env`` settings::
+Extra settings needed in your ``.env`` file::
 
     EC2_DEPLOY_AWS_SECRET_KEY = ''
     EC2_DEPLOY_SERVER_REPO = ''
