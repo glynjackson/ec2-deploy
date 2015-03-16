@@ -1,3 +1,18 @@
+Local Environment Setup
+=======================
+
+When the codebase is deployed using Fabric, the environment is automatically detected based on the server type staging/production.
+However, running a local version of the API requires you to set these environment variables yourself.
+
+The fastest way is to create a file ``.env``
+in the root directory (in the same folder as ``manage.py``) then add your variables to it.
+
+If you required different settings you don't have to set a ``.env`` file.
+Because settings use standard environment variables you can either ``export var=xyz`` in shell or create a
+``.ssh`` script for each environment yourself i.e.``source yourvars.sh``
+
+**Don't commit your ``.env`` file to GitHub!**
+
 List of Fabric Commands
 =======================
 
