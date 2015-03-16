@@ -46,9 +46,8 @@ from ec2_deploy.setup.tasks import _Wizard
 from ec2_deploy.utilities import _run_task, add_to_hosts, get_hosts_list, get_settings
 from ec2_deploy.ec2.api import _create_instance
 
-
 # Load environment vars.
-dotenv.load_dotenv(normpath(join(dirname(__file__), '"/../../../')) + '/.env')
+dotenv.load_dotenv('.env')
 
 
 def base_environment_settings():
@@ -68,6 +67,14 @@ def base_environment_settings():
     env.aws_ami = os.environ['EC2_DEPLOY_AWS_AMI']
     env.tasks = importlib.import_module("aws_fabric.environments.%s.%s" % (env.template, "tasks"))
 
+    env.server_type = {
+        'web': {
+            'image_id': 'ami-0ea61279',
+            'instance_type': 't2.micro',
+            'security_groups': ['web'],
+        },
+    }
+
 
 def staging():
     base_environment_settings()
@@ -79,14 +86,6 @@ def production():
     base_environment_settings()
     env.branch = "master"
     env.environment = 'production'
-    env.server_type = {
-        'web': {
-            'image_id': 'ami-0ea61279',
-            'instance_type': 't2.micro',
-            'security_groups': ['web'],
-        },
-    }
-
 
 
 def serversetup():
