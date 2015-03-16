@@ -1,0 +1,7 @@
+AWS_SECRET_KEY = ''
+SERVER_REPO = ''
+AWS_KEY = ''
+AWS_PRIVATE_FILE = ''
+LOCAL_REPO = ''
+TEMPLATE = 'ubuntu14custom'
+AWS_USER = 'ubuntu' 
