@@ -5,8 +5,8 @@ import boto.ec2
 
 from fabric.api import task, settings, sudo, execute, env, run, cd, local, put, abort, get, hosts
 
-from aws_fabric.connections import AWS
-from aws_fabric.notifications import Notification
+from ec2_deploy.connections import AWS
+from ec2_deploy.notifications import Notification
 
 
 def _create_instance(instance_type='web', address=None):

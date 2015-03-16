@@ -17,6 +17,6 @@ setup(
     install_requires=[
         'fabric==1.10.1',
         'boto==2.36.0',
-        'python-dotenv',
+        'python-dotenv==0.1.2'
     ],
 )

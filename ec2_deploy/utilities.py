@@ -4,8 +4,8 @@ import os
 from fabric.api import *
 from fabric.contrib.files import upload_template
 
-from aws_fabric.setup.api import has_valid_setup
-from aws_fabric.notifications import Notification
+from ec2_deploy.setup.api import has_valid_setup
+from ec2_deploy.notifications import Notification
 
 
 def _run_task(task, start_message, finished_message):

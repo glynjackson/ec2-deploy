@@ -6,8 +6,8 @@ from fabric.contrib.console import confirm
 from fabric.contrib.files import upload_template, exists
 from fabric.api import task, settings, sudo, execute, env, run, cd, local, put, abort, get
 
-from aws_fabric.connections import AWS
-from aws_fabric.notifications import Notification
+from ec2_deploy.connections import AWS
+from ec2_deploy.notifications import Notification
 
 
 class _Wizard(object):
