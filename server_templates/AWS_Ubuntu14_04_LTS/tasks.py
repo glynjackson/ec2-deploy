@@ -145,7 +145,7 @@ restart_services = [
 
 set_update_env_vars = [
     {"action": "sudo",
-     "params": "cp /srv/%(server_repo)s/server_template/%(template)s/vars_%(environment)s.env /srv/%(server_repo)s/.env",
+     "params": "cp %(server_repo)s/server_template/%(template)s/vars_%(environment)s.env %(server_repo)s/.env",
      "message": "Copying environment variables."},
 ]
 

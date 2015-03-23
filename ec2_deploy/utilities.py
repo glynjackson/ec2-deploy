@@ -104,18 +104,13 @@ def get_hosts_list(path, staging=False):
 
 def run_sanity_checks(env):
 
-
-
-
-
     Notification("Running sanity checks...").info()
-
     # Check for git branches master and develop.
     repo = Repo(env.local_repo)
     if repo.bare:
         Notification("No 'git' repo setup.").error_exit()
-
-    print(repo.branches)
+    if "develop" not in repo.branches:
+        Notification("Please create a `develop` branch in git for the staging environment.").error_exit()
 
     # Check for requirements.text.
     if not os.path.isfile(os.path.expanduser("{}/requirements.txt".format(env.local_repo))):
