@@ -1,14 +1,11 @@
 """
 Customise environment task.py for the type of server.
 
-Environment:
-    - Ubuntu Server 14.x
+Environment AWS:
+    - Ubuntu Server 14.04 LTS
       Nginx (80)
       Gunicorn (8888)
       Supervisor
-
-
-
 
 
 Hooks (* run in the functions):
@@ -53,6 +50,12 @@ update_os = [
 ]
 # main server build, install server packages.
 build_essentials = [
+
+    {"action": "sudo",
+     "params": "add-apt-repository 'deb http://archive.ubuntu.com/ubuntu $(lsb_release -sc) main universe'",
+     "message": "Adding main repository for 14.04"},
+    {"action": "sudo", "params": "apt-get --yes install python-pip python-dev build-essential",
+     "message": "Installing Python environment"},
     {"action": "sudo", "params": "apt-get --yes install python-pip python-dev build-essential",
      "message": "Installing Python environment"},
     {"action": "sudo", "params": "apt-get --yes install libmysqlclient-dev"},
@@ -143,7 +146,8 @@ restart_services = [
 ]
 
 set_update_env_vars = [
-    {"action": "sudo", "params": "cp /srv/%(server_repo)s/aws_fabric/config/vars_%(environment)s.env /srv/%(server_repo)s/.env",
+    {"action": "sudo",
+     "params": "cp /srv/%(server_repo)s/aws_fabric/config/vars_%(environment)s.env /srv/%(server_repo)s/.env",
      "message": "Copying environment variables."},
 ]
 

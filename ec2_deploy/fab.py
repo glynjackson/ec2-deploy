@@ -48,7 +48,7 @@ from ec2_deploy.ec2.api import _create_instance
 # Load environment vars.
 dotenv.load_dotenv('.env')
 
-import server_templates.ubuntu14custom.tasks
+import server_templates.AWS_Ubuntu14_04_LTS.tasks
 
 def base_environment_settings():
     """
@@ -66,7 +66,6 @@ def base_environment_settings():
     env.tasks = importlib.import_module('.tasks', 'server_templates.{}'.format(os.environ['EC2_DEPLOY_TEMPLATE']))
 
 
-
 def staging():
     base_environment_settings()
     env.environment = 'staging'
@@ -78,6 +77,7 @@ def production():
     base_environment_settings()
     env.branch = "master"
     env.environment = 'production'
+    env.hosts = get_hosts_list("/server_template/{}".format(os.environ['EC2_DEPLOY_TEMPLATE']))
 
 
 def serversetup():

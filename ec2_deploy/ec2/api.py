@@ -22,13 +22,15 @@ def _create_instance(instance_type='web', address=None):
         abort("Exited!")
 
     aws_ami = prompt("Hit enter to use the default Ubuntu AMI or enter one:", default="ami-234ecc54")
-    aws_security_groups = prompt("Which security group should this new instance belong to?", default="web")
+    aws_security_groups = prompt("Enter the security group (must already exist)?", default="web")
     aws_instance_type = prompt("What instance type do you want to create? ", default="m3.medium")
+    aws_instance_key_name = prompt("Enter your key pair name (don't include .pem extension)", default=env.key_filename.rsplit('/', 1)[1][:-4])
 
     BUILD_SERVER = {
         'image_id': aws_ami,
         'instance_type': aws_instance_type,
         'security_groups': [aws_security_groups],
+        'key_name': aws_instance_key_name
     }
 
     Notification('Spinning up the instance...').info()
