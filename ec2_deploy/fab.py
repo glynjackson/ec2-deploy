@@ -96,6 +96,7 @@ def instance():
     env.host_string = _create_instance()
     # Run standard tasks.
     _update_os()
+    _set_update_environment_vars()
     _run_task(env.tasks.build_essentials, "Building server essentials...", "Finished building essentials")
     _deploy_project()
     _install_requirements()

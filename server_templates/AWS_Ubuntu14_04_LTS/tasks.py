@@ -4,7 +4,7 @@ Customise environment task.py for the type of server.
 Environment AWS:
     - Ubuntu Server 14.04 LTS
       Nginx (80)
-      Gunicorn (8888)
+      Gunicorn (8002)
       Supervisor
 
 

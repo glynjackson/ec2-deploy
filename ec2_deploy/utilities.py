@@ -102,12 +102,31 @@ def get_hosts_list(path, staging=False):
 
 
 def run_sanity_checks(env):
-    print(os.path.expanduser("{}/requirements.txt".format(env.local_repo)))
+    # Check for requirements.text.
     Notification("Running sanity checks...").info()
     if not os.path.isfile(os.path.expanduser("{}/requirements.txt".format(env.local_repo))):
-        Notification("Your local repo does not appear to have a 'requirements.txt'. Please create one in your root.").error_exit()
+        Notification(
+            "Your local repo does not appear to have a 'requirements.txt'. Please create one in your root.").error_exit()
 
-    Notification("Passed all checks").success()
+    # Check for environment vars.
+    for var_file in ['vars_production.env', 'vars_staging.env']:
+
+        if not os.path.isfile(
+                os.path.expanduser("{}/server_templates/{}/{}".format(env.local_repo, env.template, var_file))):
+            Notification("Cannot find environments variable file in server template.").error_exit()
+
+        d = {}
+        with open("{}/server_templates/{}/{}".format(env.local_repo, env.template, var_file)) as f:
+            for line in f:
+                (key, val) = line.split("=")
+                d[key] = val
+        if len(d) is 0:
+            Notification("You have not set any environments variables for {} ".format(var_file)).error_exit()
+
+        if not "EC2_DEPLOY_SERVER_REPO" in d:
+            Notification("Please set 'EC2_DEPLOY_SERVER_REPO' in {} ".format(var_file)).error_exit()
+
+        Notification("Passed all checks").success()
 
 
 
