@@ -22,3 +22,8 @@ class Notification(object):
 
     def error(self):
         print(_red(self.message))
+
+    def error_exit(self):
+        print(_red("Failed! Exiting."))
+        print(_red(self.message))
+        raise SystemExit()

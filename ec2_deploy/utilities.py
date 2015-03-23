@@ -100,17 +100,35 @@ def get_hosts_list(path, staging=False):
 
     return list_string
 
-def get_settings(path):
-    """
-    Get config settings
-    """
-    config = {}
-    with open(path + "/settings.py", 'r') as text:
-        for line in text:
-            cleaned_line = line.replace('\n', '').replace("'", "")
-            key, value = cleaned_line.split('=')
-            config[key.strip()] = value.strip()
-    return config
+
+def run_sanity_checks(env):
+    print(os.path.expanduser("{}/requirements.txt".format(env.local_repo)))
+    Notification("Running sanity checks...").info()
+    if not os.path.isfile(os.path.expanduser("{}/requirements.txt".format(env.local_repo))):
+        Notification("Your local repo does not appear to have a 'requirements.txt'. Please create one in your root.").error_exit()
+
+    Notification("Passed all checks").success()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
