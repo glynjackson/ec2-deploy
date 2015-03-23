@@ -17,6 +17,7 @@ setup(
     install_requires=[
         'fabric==1.10.1',
         'boto==2.36.0',
-        'python-dotenv==0.1.2'
+        'python-dotenv==0.1.2',
+        'gitpython>=0.3.6',
     ],
 )

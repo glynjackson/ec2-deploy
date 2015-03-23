@@ -3,6 +3,7 @@ import os
 
 from fabric.api import *
 from fabric.contrib.files import upload_template
+from git import Repo
 
 from ec2_deploy.setup.api import has_valid_setup
 from ec2_deploy.notifications import Notification
@@ -102,11 +103,23 @@ def get_hosts_list(path, staging=False):
 
 
 def run_sanity_checks(env):
-    # Check for requirements.text.
+
+
+
+
+
     Notification("Running sanity checks...").info()
+
+    # Check for git branches master and develop.
+    repo = Repo(env.local_repo)
+    if repo.bare:
+        Notification("No 'git' repo setup.").error_exit()
+
+    print(repo.branches)
+
+    # Check for requirements.text.
     if not os.path.isfile(os.path.expanduser("{}/requirements.txt".format(env.local_repo))):
-        Notification(
-            "Your local repo does not appear to have a 'requirements.txt'. Please create one in your root.").error_exit()
+        Notification("Your local repo does not appear to have a 'requirements.txt'. Please create one in your root.").error_exit()
 
     # Check for environment vars.
     for var_file in ['vars_production.env', 'vars_staging.env']:
