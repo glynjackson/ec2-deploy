@@ -1,23 +1,27 @@
 Installation Steps
 ------------------
 
-1 Install Package
-=================
+### 1 - Install Package ###
 
 To get the latest stable release from PyPi::
+
     pip install ec2-deploy
 
-2 Pick Server Template
-======================
+### 2 - Import Fabric Commands ###
 
-Next, pick your server template from the directory ``server-template``, and edit the following files to reflect your own setup.
+Create a file in your root directory called  ``fabfile.py' and add the following to the top of the file::
+
+    from ec2_deploy.fab import *
+
+### 3 - Pick Server Template ###
+
+Pick your server template from the directory ``server-template``, and edit the following files to reflect your own setup.
 
  * Default
  * etc etc
 
 
-3 Local Environment Setup
-=========================
+### Local Environment Setup ###
 
 When the codebase is deployed using Fabric, which environment variables your server should set
 is automatically detected based on the command staging/production. Either ``vars_production.env`` or ``vars_staging.env`` will
