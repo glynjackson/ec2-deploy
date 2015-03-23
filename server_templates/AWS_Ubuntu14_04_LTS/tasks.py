@@ -56,8 +56,6 @@ build_essentials = [
      "message": "Adding main repository for 14.04"},
     {"action": "sudo", "params": "apt-get --yes install python-pip python-dev build-essential",
      "message": "Installing Python environment"},
-    {"action": "sudo", "params": "apt-get --yes install python-pip python-dev build-essential",
-     "message": "Installing Python environment"},
     {"action": "sudo", "params": "apt-get --yes install libmysqlclient-dev"},
     {"action": "sudo", "params": "aptitude install -y libapache2-mod-wsgi"},
     {"action": "sudo", "params": "apt-get --yes install git-core", "message": "Installing Git"},
@@ -147,7 +145,7 @@ restart_services = [
 
 set_update_env_vars = [
     {"action": "sudo",
-     "params": "cp /srv/%(server_repo)s/aws_fabric/config/vars_%(environment)s.env /srv/%(server_repo)s/.env",
+     "params": "cp /srv/%(server_repo)s/server_template/%(template)s/vars_%(environment)s.env /srv/%(server_repo)s/.env",
      "message": "Copying environment variables."},
 ]
 

@@ -1,6 +1,9 @@
 Installation Steps
 ------------------
 
+Your project must have a ``requirements.txt`` file even if you don't have any.
+Your project must be using ``Git`` with a ``master`` and ``develop`` branch.
+
 ### 1 - Install Package ###
 
 To get the latest stable release from PyPi::
