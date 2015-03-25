@@ -4,40 +4,51 @@ Installation Steps
 Your project must have a ``requirements.txt`` file even if you don't have any.
 Your project must be using ``Git`` with a ``master`` and ``develop`` branch.
 
-### 1 - Install Package ###
+1 - Install Package
+~~~~~~~~~~~~~~~~~~~
 
 To get the latest stable release from PyPi::
 
     pip install ec2-deploy
 
-### 2 - Import Fabric Commands ###
+2 - Import Fabric Commands
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Create a file in your root directory called  ``fabfile.py' and add the following to the top of the file::
 
     from ec2_deploy.fab import *
 
-### 3 - Pick Server Template ###
+3 - Pick Server Template
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 Pick your server template from the directory ``server-template``, and edit the following files to reflect your own setup.
 
  * Default
  * etc etc
 
+Environment Variables
+~~~~~~~~~~~~~~~~~~~~~
 
-### Local Environment Setup ###
+Environment variables for your server are set in ``vars_production.env`` and ``vars_staging.env`` found within the
+server template used. At a minimn you must set the following environment variable::
 
-When the codebase is deployed using Fabric, which environment variables your server should set
-is automatically detected based on the command staging/production. Either ``vars_production.env`` or ``vars_staging.env`` will
-be deployed.
+    EC2_DEPLOY_SERVER_REPO="/srv/[APP_FOLDER]"
 
-However, running a local version requires you to create some extra environment variables that are used for deployment
+Replacing ``[APP_FOLDER]`` with the folder where your application is located. You can and any of your own custom
+variables in the same file. For example you may want to set variables for Django settings.
+
+
+EC2 Deploy will create your server environment variables based on the command used to deploy.
+For example ``fab staging deploy`` would set copy the environment variables from the file ``vars_staging.env`` within
+your server template folder.
+
+Running a local version of your application requires you to create some extra environment variables that are used for deployment
 configuration/settings data in a file called ``.env``.
-
 
 Extra settings needed in your ``.env`` file::
 
     EC2_DEPLOY_AWS_SECRET_KEY = ''
-    EC2_DEPLOY_SERVER_REPO = ''
+    EC2_DEPLOY_SERVER_REPO="/srv/[APP_FOLDER]"
     EC2_DEPLOY_AWS_KEY = ''
     EC2_DEPLOY_AWS_PRIVATE_FILE = ''
     EC2_DEPLOY_LOCAL_REPO = ''

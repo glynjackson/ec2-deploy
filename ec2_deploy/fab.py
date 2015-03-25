@@ -108,7 +108,8 @@ def instance():
     _restart_services()
 
     if confirm("Do you want to add this new instance to your hosts.py? (recommended)", True):
-        add_to_hosts(env.local_repo + "/aws_fabric/config", env.host_string)
+        pass
+        #add_to_hosts(env.local_repo + os.environ['EC2_DEPLOY_TEMPLATE'] + "/config", env.host_string)
 
 
 def update():
