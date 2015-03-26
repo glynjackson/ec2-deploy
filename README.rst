@@ -1,3 +1,13 @@
+
+EC2 Deploy is a convenient deployment tool to facilitate code deployment and other tasks to AWS EC2.
+
+Key Features
+
+* Creates new EC2 instances based on a server template.
+* Add environment variables to your Python or Django Project.
+* Deploy your git repo to staging and production servers.
+
+
 Installation Steps
 ------------------
 
@@ -29,15 +39,15 @@ Once you have your ``fabfile.py`` add the following import to the top of the fil
 The next task is to pick your server template from the directory ``server-template``
 and edit the following files to reflect your own remote setup.
 
-For example the template ``AWS_Ubuntu14_04_LTS`` runs a Nginx, Gunicorn.
+For example the template ``AWS_Ubuntu14_04_LTS`` runs a Nginx, Gunicorn setup for Django.
 
  * ``default`` - Nginx Site File
  * ``start_gunicorn.conf``
  * ``gunicorn.conf.py``
  * ``wsgi.py`` - Remote server wsgi
 
- You can create your own server template by copying an existing one, then modifying the file ``tasks.py``
- as required for your own setup.
+You can create your own server template by copying an existing one, then modifying the file ``tasks.py``
+as required for your own setup.
 
 Environment Variables
 ~~~~~~~~~~~~~~~~~~~~~

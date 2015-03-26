@@ -8,16 +8,16 @@ setup(
     packages=find_packages(exclude=['tests*']),
     include_package_data=True,
     version=app.__version__,
-    description='Convenient Python Fabric Scrips to Facilitate Code Deployment to AWS EC2',
+    description='EC2 Deploy is a convenient deployment tool to facilitate code deployment and other tasks to AWS EC2.',
     author='Glyn Jackson',
     author_email='me@glynjackson.org',
-    url='https://github.com/glynjackson/ec2-deploy',  # use the URL to the github repo
-    keywords=['ec2', 'deployment', 'aws', 'fabric'],  # arbitrary keywords
+    url='https://github.com/glynjackson/ec2-deploy',
+    keywords=['ec2', 'deployment', 'aws', 'fabric', 'environment variables', 'amazon'],
     classifiers=[],
     install_requires=[
         'fabric==1.10.1',
         'boto==2.36.0',
         'python-dotenv==0.1.2',
-        'gitpython>=0.3.6',
+        'gitpython==0.3.6',
     ],
 )
