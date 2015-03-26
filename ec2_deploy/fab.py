@@ -43,7 +43,7 @@ from fabric.contrib.console import confirm
 from fabric.api import task, settings, sudo, execute, env, run, cd, local, put, abort, get, hosts
 
 from ec2_deploy.utilities import _run_task, add_to_hosts, get_hosts_list, run_sanity_checks
-from ec2_deploy.ec2.api import _create_instance
+from ec2_deploy.ec2.api import create_instance
 
 # Load environment vars.
 dotenv.load_dotenv('.env')
@@ -93,7 +93,7 @@ def instance():
     """
     run_sanity_checks(env)
     # Use Boto to create an EC2 instance.
-    env.host_string = _create_instance()
+    env.host_string = create_instance()
     # Run standard tasks.
     _update_os()
     _run_task(env.tasks.build_essentials, "Building server essentials...", "Finished building essentials")
@@ -108,7 +108,8 @@ def instance():
     _restart_services()
 
     if confirm("Do you want to add this new instance to your hosts.py? (recommended)", True):
-        add_to_hosts(env.local_repo + "/aws_fabric/config", env.host_string)
+        pass
+        #add_to_hosts(env.local_repo + os.environ['EC2_DEPLOY_TEMPLATE'] + "/config", env.host_string)
 
 
 def update():

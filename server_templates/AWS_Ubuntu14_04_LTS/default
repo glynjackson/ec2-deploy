@@ -36,11 +36,3 @@ server {
         }
     }
 }
-
-
-server {
-    listen 5555;
-    server_name flower.DOMAIN.COM
-
-
-}

@@ -70,7 +70,7 @@ build_essentials = [
 setup_server = [
     {"action": "sudo", "params": "pip install git+https://github.com/benoitc/gunicorn.git",
      "message": "Pip installing WSGI HTTP Server Gunicorn"},
-    {"action": "sudo", "params": "cp -fr %(server_repo)s/aws_fabric/environments/%(template)s/wsgi.py %(server_repo)s",
+    {"action": "sudo", "params": "cp -fr %(server_repo)s/server_templates/%(template)s/wsgi.py %(server_repo)s",
      "message": "Copying WSGI"},
     {"action": "sudo", "params": "apt-get --yes install supervisor", "message": "Setting up supervisor"},
     {"action": "sudo", "params": "apt-get --yes install libevent-dev", "message": "Installing workers"},
@@ -78,13 +78,13 @@ setup_server = [
     {"action": "sudo", "params": "easy_install gevent", "message": "Gevent install"},
 
     {"action": "sudo",
-     "params": "cp -fr %(server_repo)s/aws_fabric/environments/%(template)s/start_gunicorn.conf /etc/supervisor/conf.d/",
+     "params": "cp -fr %(server_repo)s/server_templates/%(template)s/start_gunicorn.conf /etc/supervisor/conf.d/",
      "message": "Creating a start-up process for Gunicorn"},
 
     {"action": "sudo", "params": "apt-get --yes install nginx", "message": "Installing nginx"},
 
     {"action": "sudo",
-     "params": "cp -fr %(server_repo)s/aws_fabric/environments/%(template)s/default /etc/nginx/sites-available",
+     "params": "cp -fr %(server_repo)s/server_templates/%(template)s/default /etc/nginx/sites-available",
      "message": "Copying Nginx config file to location /etc/nginx/sites-available"},
 
     {"action": "sudo", "params": "apt-get --yes install libjpeg-dev", "message": "Installing libjpeg-dev"},
@@ -145,7 +145,7 @@ restart_services = [
 
 set_update_env_vars = [
     {"action": "sudo",
-     "params": "cp /srv/%(server_repo)s/server_template/%(template)s/vars_%(environment)s.env /srv/%(server_repo)s/.env",
+     "params": "cp %(server_repo)s/server_templates/%(template)s/vars_%(environment)s.env %(server_repo)s/.env",
      "message": "Copying environment variables."},
 ]
 

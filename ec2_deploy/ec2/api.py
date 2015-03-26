@@ -10,7 +10,7 @@ from ec2_deploy.connections import AWS
 from ec2_deploy.notifications import Notification
 
 
-def _create_instance(instance_type='web', address=None):
+def create_instance(instance_type='web', address=None):
     """
     Creates a new EC2 Instance using Boto.
     """
@@ -46,7 +46,7 @@ def _create_instance(instance_type='web', address=None):
 
     Notification('Instance %s was created successfully' % instance.id).success()
     # A new instance take a little while to allow connections so sleep for x seconds.
-    sleep_for = 10
+    sleep_for = 30
     Notification('Sleeping for %s seconds before attempting to connect...' % sleep_for).info()
     time.sleep(sleep_for)
 
