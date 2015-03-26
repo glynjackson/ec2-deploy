@@ -19,7 +19,7 @@ To get the latest stable release from PyPi enter the following::
 
 To make use of the Fabric commands within EC2 Deploy you must import them within your own ``fabfile.py`` file.
 EC2 Deploy will automatically install Frabric as a dependency if you don't have it already.
-Once you have your ``fabfile.py``add the following import to the top of the file::
+Once you have your ``fabfile.py`` add the following import to the top of the file::
 
     from ec2_deploy.fab import *
 
@@ -27,14 +27,14 @@ Once you have your ``fabfile.py``add the following import to the top of the file
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 The next task is to pick your server template from the directory ``server-template``
-and edit the following files to reflect your own setup.
+and edit the following files to reflect your own remote setup.
 
-For example the template ``AWS_Ubuntu14_04_LTS`` runs a Nginx, Gunicorn design for Django Web Applications and the
-following files need to be edited.
+For example the template ``AWS_Ubuntu14_04_LTS`` runs a Nginx, Gunicorn.
 
-
- * Default - Nginx
- * etc etc
+ * ``default`` - Nginx Site File
+ * ``start_gunicorn.conf``
+ * ``gunicorn.conf.py``
+ * ``wsgi.py`` - Remote server wsgi
 
  You can create your own server template by copying an existing one, then modifying the file ``tasks.py``
  as required for your own setup.
