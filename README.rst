@@ -2,50 +2,67 @@ Installation Steps
 ------------------
 
 Your project must have a ``requirements.txt`` file even if you don't have any.
+
 Your project must be using ``Git`` with a ``master`` and ``develop`` branch.
+Master is used for release to production where develop is used for you staging server.
 
-1 - Install Package
-~~~~~~~~~~~~~~~~~~~
+1 - Install The EC2 Deploy Package
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-To get the latest stable release from PyPi::
+You will need to ``pip`` install EC2 Deploy within your virtual environment.
+To get the latest stable release from PyPi enter the following::
 
     pip install ec2-deploy
 
 2 - Import Fabric Commands
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Create a file in your root directory called  ``fabfile.py' and add the following to the top of the file::
+To make use of the Fabric commands within EC2 Deploy you must import them within your own ``fabfile.py`` file.
+EC2 Deploy will automatically install Frabric as a dependency if you don't have it already.
+Once you have your ``fabfile.py``add the following import to the top of the file::
 
     from ec2_deploy.fab import *
 
 3 - Pick Server Template
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-Pick your server template from the directory ``server-template``, and edit the following files to reflect your own setup.
+The next task is to pick your server template from the directory ``server-template``
+and edit the following files to reflect your own setup.
 
- * Default
+For example the template ``AWS_Ubuntu14_04_LTS`` runs a Nginx, Gunicorn design for Django Web Applications and the
+following files need to be edited.
+
+
+ * Default - Nginx
  * etc etc
+
+ You can create your own server template by copying an existing one, then modifying the file ``tasks.py``
+ as required for your own setup.
 
 Environment Variables
 ~~~~~~~~~~~~~~~~~~~~~
 
-Environment variables for your server are set in ``vars_production.env`` and ``vars_staging.env`` found within the
-server template used. At a minimn you must set the following environment variable::
+EC2 Deploy gives you a very useful environment variable file with ``python-dotenv``, which
+reads values from .env file and loads them as environment variables.
+
+For your remote server you set these variables in ``vars_production.env`` and ``vars_staging.env`` found within the
+server template used. EC2 Deploy will create your server environment variables based on the command used during
+deployment or server creation.
+
+For example ``fab staging deploy`` would copy the environment variables from the file ``vars_staging.env`` within
+your server template folder as ``.env``.
+
+At a minimum you must set the following environment variable within ``vars_production.env`` and ``vars_staging.env``::
 
     EC2_DEPLOY_SERVER_REPO="/srv/[APP_FOLDER]"
 
-Replacing ``[APP_FOLDER]`` with the folder where your application is located. You can and any of your own custom
-variables in the same file. For example you may want to set variables for Django settings.
+Replacing ``[APP_FOLDER]`` with the folder where your application is located on the remote server.
+You can of course use any the same file to store your own custom variables for both your
+staging and production environments.
 
+Running a local version of your application requires you to create your own ``.env`` file with some additional variables.
 
-EC2 Deploy will create your server environment variables based on the command used to deploy.
-For example ``fab staging deploy`` would set copy the environment variables from the file ``vars_staging.env`` within
-your server template folder.
-
-Running a local version of your application requires you to create some extra environment variables that are used for deployment
-configuration/settings data in a file called ``.env``.
-
-Extra settings needed in your ``.env`` file::
+Example **required** local``.env`` file::
 
     EC2_DEPLOY_AWS_SECRET_KEY = ''
     EC2_DEPLOY_SERVER_REPO="/srv/[APP_FOLDER]"
@@ -55,13 +72,12 @@ Extra settings needed in your ``.env`` file::
     EC2_DEPLOY_TEMPLATE = 'ubuntu14custom'
     EC2_DEPLOY_AWS_USER = 'ubuntu'
 
-
 List of Fabric Commands
 -----------------------
 
 There are a number of convenient Fabric scrips available to facilitate code deployment and other server tasks on AWS EC2.
 
-**Note:** Local environment must be configured correctly to run Fabric tasks *(see local environment setup)*.
+**Note:** Local environment must be configured correctly to run Fabric tasks *(see environment variables above)*.
 
 * ``fab staging/production instance`` - Creates an EC2 instance from an AMI and configures it based on template.
     * Creates new EC2 instance.
