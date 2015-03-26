@@ -5,7 +5,7 @@ from setuptools import find_packages
 
 setup(
     name='ec2_deploy',
-    packages=find_packages(exclude=['tests*']),
+    packages=find_packages(exclude=['tests*', './demo', '/server_templates*']),
     include_package_data=True,
     version=app.__version__,
     description='EC2 Deploy is a convenient deployment tool to facilitate code deployment and other tasks to AWS EC2.',
