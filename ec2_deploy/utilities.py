@@ -5,7 +5,6 @@ from fabric.api import *
 from fabric.contrib.files import upload_template
 from git import Repo
 
-from ec2_deploy.setup.api import has_valid_setup
 from ec2_deploy.notifications import Notification
 
 
@@ -14,11 +13,6 @@ def _run_task(task, start_message, finished_message):
     Tasks a task from tasks.py and runs through the commands on the server
     """
     start = time.time()
-
-    # Check if any hosts exist
-    if not has_valid_setup:
-        Notification("You don't have a valid setup file. Have you run 'fab setupwizard'?").error()
-        abort("Exit")
 
     Notification(start_message).info()
 
