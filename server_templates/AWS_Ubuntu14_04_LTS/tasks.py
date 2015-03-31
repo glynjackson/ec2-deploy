@@ -78,7 +78,7 @@ setup_server = [
     {"action": "sudo", "params": "easy_install gevent", "message": "Gevent install"},
 
     {"action": "sudo",
-     "params": "cp -fr %(server_repo)s/server_templates/%(template)s/start_gunicorn.conf /etc/supervisor/conf.d/",
+     "params": "cp -fr %(server_repo)s/server_templates/%(template)s/supervisord.conf /etc/supervisor/conf.d/",
      "message": "Creating a start-up process for Gunicorn"},
 
     {"action": "sudo", "params": "apt-get --yes install nginx", "message": "Installing nginx"},
