@@ -12,13 +12,13 @@ EC2 Deploy is NOT a replacement for any of these services!
 Key Features
 
 * Create EC2 instances based on server template.
-* Creates environment variables for different instances staging/production for use in your Python or Django Project.
-* Deploy your codebase across multiple servers with just one command!
+* Creates environment variables for different instances staging/production for use in your project.
+* Deploys your codebase across multiple servers.
 
 Installation Steps
 ------------------
 
-Your project must have a ``requirements.txt`` file even if you don't have any.
+Your project must have a ``requirements.txt`` file even if you don't have any!
 
 Your project must be using ``Git`` with a ``master`` and ``develop`` branch.
 Master is used for release to production where develop is used for your staging server.
@@ -79,7 +79,7 @@ staging and production environments.
 
 Running a local version of your application requires you to create your own ``.env`` file with some additional variables.
 
-Example **required** local``.env`` file::
+Example **required** local ``.env`` file::
 
     EC2_DEPLOY_AWS_SECRET_KEY = ''
     EC2_DEPLOY_SERVER_REPO="/srv/[APP_FOLDER]"
