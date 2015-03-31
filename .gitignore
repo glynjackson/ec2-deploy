@@ -22,3 +22,4 @@ db.sqlite
 .env
 .DS_Store
 fabfile.py
+/env/
