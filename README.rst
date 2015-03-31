@@ -1,12 +1,19 @@
 
-EC2 Deploy is a convenient deployment tool to facilitate code deployment and other tasks to AWS EC2.
+EC2 Deploy is a convenient deployment tool to facilitate server setup and code deployment across multiple AWS EC2 instances.
+
+Why not use Git for deployment?
+-------------------------------
+
+Git is a powerful tool and over the years I have experimented deploying code with it.
+Using a bare repo and git hooks was ideal for some time, but as my team and project grew this got unmanageable.
+Puppet is amazing, perfect in 90% of the cases, but for smaller clients can get tedious.
+EC2 Deploy is NOT a replacement for any of these services!
 
 Key Features
 
-* Creates new EC2 instances based on a server template.
-* Add environment variables to your Python or Django Project.
-* Deploy your git repo to staging and production servers.
-
+* Create EC2 instances based on server template.
+* Creates environment variables for different instances staging/production for use in your Python or Django Project.
+* Deploy your codebase across multiple servers with just one command!
 
 Installation Steps
 ------------------
@@ -14,7 +21,7 @@ Installation Steps
 Your project must have a ``requirements.txt`` file even if you don't have any.
 
 Your project must be using ``Git`` with a ``master`` and ``develop`` branch.
-Master is used for release to production where develop is used for you staging server.
+Master is used for release to production where develop is used for your staging server.
 
 1 - Install The EC2 Deploy Package
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -37,14 +44,14 @@ Once you have your ``fabfile.py`` add the following import to the top of the fil
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 The next task is to pick your server template from the directory ``server-template``
-and edit the following files to reflect your own remote setup.
+and edit the following files to reflect your own remote server setup.
 
-For example the template ``AWS_Ubuntu14_04_LTS`` runs a Nginx, Gunicorn setup for Django.
+For example the template ``AWS_Ubuntu14_04_LTS`` runs a Nginx, Gunicorn and Supervisor setup for Django Applications.
 
- * ``default`` - Nginx Site File
- * ``start_gunicorn.conf``
- * ``gunicorn.conf.py``
- * ``wsgi.py`` - Remote server wsgi
+ * ``default`` - Nginx Site File.
+ * ``supervisord.conf``.
+ * ``gunicorn.conf.py``.
+ * ``wsgi.py`` - Remote server WSGI.
 
 You can create your own server template by copying an existing one, then modifying the file ``tasks.py``
 as required for your own setup.
@@ -53,7 +60,7 @@ Environment Variables
 ~~~~~~~~~~~~~~~~~~~~~
 
 EC2 Deploy gives you a very useful environment variable file with ``python-dotenv``, which
-reads values from .env file and loads them as environment variables.
+reads values from a local .env file and loads them as environment variables for your application.
 
 For your remote server you set these variables in ``vars_production.env`` and ``vars_staging.env`` found within the
 server template used. EC2 Deploy will create your server environment variables based on the command used during
