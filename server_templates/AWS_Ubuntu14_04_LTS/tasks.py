@@ -54,7 +54,7 @@ build_essentials = [
     {"action": "sudo",
      "params": "add-apt-repository 'deb http://archive.ubuntu.com/ubuntu $(lsb_release -sc) main universe'",
      "message": "Adding main repository for 14.04"},
-    {"action": "sudo", "params": "apt-get --yes install python-pip python-dev build-essential",
+    {"action": "sudo", "params": "apt-get --yes install python-pip python-dev libpq-dev build-essential",
      "message": "Installing Python environment"},
     {"action": "sudo", "params": "apt-get --yes install libmysqlclient-dev"},
     {"action": "sudo", "params": "aptitude install -y libapache2-mod-wsgi"},
@@ -78,7 +78,7 @@ setup_server = [
     {"action": "sudo", "params": "easy_install gevent", "message": "Gevent install"},
 
     {"action": "sudo",
-     "params": "cp -fr %(server_repo)s/server_templates/%(template)s/start_gunicorn.conf /etc/supervisor/conf.d/",
+     "params": "cp -fr %(server_repo)s/server_templates/%(template)s/supervisord.conf /etc/supervisor/conf.d/",
      "message": "Creating a start-up process for Gunicorn"},
 
     {"action": "sudo", "params": "apt-get --yes install nginx", "message": "Installing nginx"},

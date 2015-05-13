@@ -70,14 +70,15 @@ def staging():
     base_environment_settings()
     env.environment = 'staging'
     env.branch = "develop"
-    env.hosts = get_hosts_list("/server_template/{}".format(os.environ['EC2_DEPLOY_TEMPLATE']), staging=True)
-
+    env.hosts = get_hosts_list(
+        "{}/server_templates/{}".format(os.environ['EC2_DEPLOY_LOCAL_REPO'], os.environ['EC2_DEPLOY_TEMPLATE']),
+        staging=True)
 
 def production():
     base_environment_settings()
     env.branch = "master"
     env.environment = 'production'
-    env.hosts = get_hosts_list("/server_template/{}".format(os.environ['EC2_DEPLOY_TEMPLATE']))
+    env.hosts = get_hosts_list("{}/server_templates/{}".format(os.environ['EC2_DEPLOY_LOCAL_REPO'], os.environ['EC2_DEPLOY_TEMPLATE']))
 
 
 def serversetup():
